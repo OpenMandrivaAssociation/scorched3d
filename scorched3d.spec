@@ -1,6 +1,6 @@
 %define	name	scorched3d
 %define	oname	Scorched3D
-%define version 40
+%define version 41
 %define release %mkrel 1
 %define	Summary	Scorched Earth 3D OpenGL Remake
 
@@ -13,13 +13,12 @@ Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
 #gw don't use bundled zlib
-Patch1: scorched-zlib.patch
+Patch1:		scorched-zlib.patch
 License:	GPL
 Group:		Games/Arcade
 Summary:	%{Summary}
 BuildRequires:	Mesa-common-devel SDL_mixer-devel SDL_net-devel wxGTK2.6-devel
 BuildRequires:	openal-devel
-BuildRequires:	automake1.7 autoconf2.5
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -77,7 +76,7 @@ Icon=%{name}
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=X-MandrivaLinux-MoreApplications-Games-Arcade;Game;ArcadeGame;
+Categories=Game;ArcadeGame;
 EOF
 
 
@@ -106,4 +105,3 @@ EOF
 %_datadir/applications/mandriva-*
 %defattr(755,root,root,755)
 %{_gamesbindir}/*
-
