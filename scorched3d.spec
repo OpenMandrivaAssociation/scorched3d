@@ -1,6 +1,6 @@
 %define	name	scorched3d
 %define	oname	Scorched3D
-%define version 41
+%define version 41.1
 %define release %mkrel 1
 %define	Summary	Scorched Earth 3D OpenGL Remake
 
@@ -13,12 +13,13 @@ Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
 #gw don't use bundled zlib
-Patch1:		scorched-zlib.patch
+#Patch1:		scorched-zlib.patch
 License:	GPL
 Group:		Games/Arcade
 Summary:	%{Summary}
 BuildRequires:	Mesa-common-devel SDL_mixer-devel SDL_net-devel wxGTK2.6-devel
 BuildRequires:	openal-devel
+BuildRequires:	freealut-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -37,7 +38,7 @@ environment and LAN and internet play.
 
 %prep
 %setup -q -n scorched
-%patch1 -p1 -b .zlib
+#%patch1 -p1 -b .zlib
 for i in `find -type d -name CVS`; do rm -rf $i; done
 
 %build
