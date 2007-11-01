@@ -1,25 +1,23 @@
-%define	name	scorched3d
 %define	oname	Scorched3D
-%define version 41.1
-%define release %mkrel 1
-%define	Summary	Scorched Earth 3D OpenGL Remake
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
-URL:		http://www.scorched3d.co.uk/
+Summary:	Scorched Earth 3D OpenGL Remake
+Name:		scorched3d
+Version:	41.1
+Release:	%mkrel 1
+License:	GPLv2+
+Group:		Games/Arcade
+URL:		http://www.scorched3d.co.uk
 Source0:	http://prdownloads.sourceforge.net/scorched3d/%{oname}-%{version}-src.tar.bz2
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
-#gw don't use bundled zlib
-#Patch1:		scorched-zlib.patch
-License:	GPL
-Group:		Games/Arcade
-Summary:	%{Summary}
-BuildRequires:	Mesa-common-devel SDL_mixer-devel SDL_net-devel wxGTK2.6-devel
+BuildRequires:	Mesa-common-devel
+BuildRequires:	SDL_mixer-devel
+BuildRequires:	SDL_net-devel
+BuildRequires:	wxGTK2.8-devel
 BuildRequires:	openal-devel
 BuildRequires:	freealut-devel
+BuildRequires:	fftw-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -38,37 +36,23 @@ environment and LAN and internet play.
 
 %prep
 %setup -q -n scorched
-#%patch1 -p1 -b .zlib
 for i in `find -type d -name CVS`; do rm -rf $i; done
 
 %build
-#cd scripts
-#perl createAMMakefile.pl
-#cd ..
-#aclocal-1.7
-#automake-1.7 --foreign
-#autoconf-2.5x
-#gw work around binutils bug, use g++ for the configure call
-export CC=g++ 
-%configure2_5x	--bindir=%_gamesbindir --datadir=%_gamesdatadir/%name --with-wx-config=%_bindir/wx-config-ansi
-%make CC=gcc
+%configure2_5x \
+	--bindir=%{_gamesbindir} \
+	--datadir=%{_gamesdatadir}/%{name} \
+	--with-wx-config=%{_bindir}/wx-config-ansi \
+	--disable-openaltest
+%make 
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
-%{makeinstall_std}
-%{__rm} -rf $RPM_BUILD_ROOT%{_gamesdatadir}/%{name}/{README,documentation}
+rm -rf %{buildroot}
+%makeinstall_std
+rm -rf %{buildroot}%{_gamesdatadir}/%{name}/{README,documentation}
 
-%{__install} -d $RPM_BUILD_ROOT%{_menudir}
-%{__cat} <<EOF > $RPM_BUILD_ROOT%{_menudir}/%{name}
-?package(%{name}):command="%{_gamesbindir}/%{name}" \
-		icon=%{name}.png \
-		needs="x11" \
-		section="More Applications/Games/Arcade" \
-		title="Scorched 3D"\
-		longtitle="%{Summary}" xdg="true"
-EOF
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
 [Desktop Entry]
 Name=Scorched 3D
 Comment=%{Summary}
@@ -80,29 +64,25 @@ StartupNotify=true
 Categories=Game;ArcadeGame;
 EOF
 
-
-
-%{__install} %{SOURCE11} -D $RPM_BUILD_ROOT%{_miconsdir}/%{name}.png
-%{__install} %{SOURCE12} -D $RPM_BUILD_ROOT%{_iconsdir}/%{name}.png
-%{__install} %{SOURCE13} -D $RPM_BUILD_ROOT%{_liconsdir}/%{name}.png
+install %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+install %{SOURCE12} -D %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+install %{SOURCE13} -D %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 %post
-%update_menus
+%{update_menus}
+%update_icon_cache hicolor
 
 %postun
-%clean_menus
+%{clean_menus}
+%clean_icon_cache hicolor
 
 %clean
-%{__rm} -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
-%defattr(644,root,root,755)
+%defattr(-,root,root)
 %doc README documentation/* AUTHORS TODO
-%{_gamesdatadir}/%{name}
-%{_iconsdir}/%{name}.png
-%{_liconsdir}/%{name}.png
-%{_miconsdir}/%{name}.png
-%{_menudir}/%{name}
-%_datadir/applications/mandriva-*
-%defattr(755,root,root,755)
 %{_gamesbindir}/*
+%{_gamesdatadir}/%{name}
+%{_iconsdir}/hicolor/*/apps/%{name}.png
+%{_datadir}/applications/*.desktop
