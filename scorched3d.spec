@@ -18,6 +18,7 @@ BuildRequires:	wxGTK2.8-devel
 BuildRequires:	openal-devel
 BuildRequires:	freealut-devel
 BuildRequires:	fftw-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Scorched is a game based loosely on the classic DOS game Scorche
