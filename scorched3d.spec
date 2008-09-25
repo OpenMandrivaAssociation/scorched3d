@@ -3,7 +3,7 @@
 Summary:	Scorched Earth 3D OpenGL Remake
 Name:		scorched3d
 Version:	41.3
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	GPLv2+
 Group:		Games/Arcade
 URL:		http://www.scorched3d.co.uk
@@ -11,10 +11,11 @@ Source0:	http://prdownloads.sourceforge.net/scorched3d/%{oname}-%{version}-src.t
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
+Patch: scorched3d-gcc4.3.patch
 BuildRequires:	Mesa-common-devel
 BuildRequires:	SDL_mixer-devel
 BuildRequires:	SDL_net-devel
-BuildRequires:	wxGTK2.8-devel
+BuildRequires:	wxgtku2.8-devel
 BuildRequires:	openal-devel
 BuildRequires:	freealut-devel
 BuildRequires:	fftw-devel
@@ -36,13 +37,14 @@ environment and LAN and internet play.
 
 %prep
 %setup -q -n scorched
+%patch -p1
 for i in `find -type d -name CVS`; do rm -rf $i; done
 
 %build
 %configure2_5x \
 	--bindir=%{_gamesbindir} \
 	--datadir=%{_gamesdatadir}/%{name} \
-	--with-wx-config=%{_bindir}/wx-config-ansi \
+	--with-wx-config=%{_bindir}/wx-config-unicode \
 	--disable-openaltest
 %make 
 
