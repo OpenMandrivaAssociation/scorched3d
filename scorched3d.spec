@@ -2,16 +2,16 @@
 
 Summary:	Scorched Earth 3D OpenGL Remake
 Name:		scorched3d
-Version:	41.3
-Release:	%mkrel 5
-License:	GPLv2+
+Version:	42
+Release:	%mkrel 1
+License:	GPLv1+
 Group:		Games/Arcade
 URL:		http://www.scorched3d.co.uk
 Source0:	http://prdownloads.sourceforge.net/scorched3d/%{oname}-%{version}-src.tar.bz2
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
-Patch: scorched3d-gcc4.3.patch
+Patch0:		Scorched3D-42-gcc43.patch
 BuildRequires:	Mesa-common-devel
 BuildRequires:	SDL_mixer-devel
 BuildRequires:	SDL_net-devel
@@ -19,6 +19,7 @@ BuildRequires:	wxgtku2.8-devel
 BuildRequires:	openal-devel
 BuildRequires:	freealut-devel
 BuildRequires:	fftw-devel
+BuildRequires:	expat-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -37,7 +38,7 @@ environment and LAN and internet play.
 
 %prep
 %setup -q -n scorched
-%patch -p1
+%patch0 -p1
 for i in `find -type d -name CVS`; do rm -rf $i; done
 
 %build
@@ -45,7 +46,8 @@ for i in `find -type d -name CVS`; do rm -rf $i; done
 	--bindir=%{_gamesbindir} \
 	--datadir=%{_gamesdatadir}/%{name} \
 	--with-wx-config=%{_bindir}/wx-config-unicode \
-	--disable-openaltest
+	--disable-openaltest \
+	--enable-dependency-tracking
 %make 
 
 %install
@@ -87,7 +89,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc README documentation/* AUTHORS TODO
+%doc README documentation/* AUTHORS
 %{_gamesbindir}/*
 %{_gamesdatadir}/%{name}
 %{_iconsdir}/hicolor/*/apps/%{name}.png
