@@ -3,7 +3,7 @@
 Summary:	Scorched Earth 3D OpenGL Remake
 Name:		scorched3d
 Version:	42
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv1+
 Group:		Games/Arcade
 URL:		http://www.scorched3d.co.uk
@@ -59,7 +59,7 @@ mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
 [Desktop Entry]
 Name=Scorched 3D
-Comment=%{Summary}
+Comment=Scorched Earth 3D OpenGL Remake
 Exec=%{_gamesbindir}/%{name}
 Icon=%{name}
 Terminal=false
