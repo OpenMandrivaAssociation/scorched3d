@@ -2,16 +2,15 @@
 
 Summary:	Scorched Earth 3D OpenGL Remake
 Name:		scorched3d
-Version:	42
-Release:	%mkrel 2
+Version:	42.1
+Release:	%mkrel 1
 License:	GPLv1+
 Group:		Games/Arcade
 URL:		http://www.scorched3d.co.uk
-Source0:	http://prdownloads.sourceforge.net/scorched3d/%{oname}-%{version}-src.tar.bz2
+Source0:	http://prdownloads.sourceforge.net/scorched3d/%{oname}-%{version}-src.tar.gz
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
-Patch0:		Scorched3D-42-gcc43.patch
 BuildRequires:	Mesa-common-devel
 BuildRequires:	SDL_mixer-devel
 BuildRequires:	SDL_net-devel
@@ -38,7 +37,6 @@ environment and LAN and internet play.
 
 %prep
 %setup -q -n scorched
-%patch0 -p1
 for i in `find -type d -name CVS`; do rm -rf $i; done
 
 %build
@@ -89,7 +87,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc README documentation/* AUTHORS
+%doc README documentation/* 
 %{_gamesbindir}/*
 %{_gamesdatadir}/%{name}
 %{_iconsdir}/hicolor/*/apps/%{name}.png
