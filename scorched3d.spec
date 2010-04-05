@@ -2,8 +2,8 @@
 
 Summary:	Scorched Earth 3D OpenGL Remake
 Name:		scorched3d
-Version:	42.1
-Release:	%mkrel 3
+Version:	43
+Release:	%mkrel 1
 License:	GPLv1+
 Group:		Games/Arcade
 URL:		http://www.scorched3d.co.uk
@@ -46,7 +46,7 @@ for i in `find -type d -name CVS`; do rm -rf $i; done
 	--with-wx-config=%{_bindir}/wx-config-unicode \
 	--disable-openaltest \
 	--enable-dependency-tracking
-%make 
+%make
 
 %install
 rm -rf %{buildroot}
