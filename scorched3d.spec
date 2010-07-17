@@ -2,12 +2,14 @@
 
 Summary:	Scorched Earth 3D OpenGL Remake
 Name:		scorched3d
-Version:	43.1b
+Version:	43.1c
 Release:	%mkrel 1
 License:	GPLv1+
 Group:		Games/Arcade
 URL:		http://www.scorched3d.co.uk
 Source0:	http://prdownloads.sourceforge.net/scorched3d/%{oname}-%{version}-src.tar.gz
+# openal-soft does not provide openal-config, so fake it
+Source1:	openal-config
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
@@ -38,14 +40,17 @@ environment and LAN and internet play.
 %prep
 %setup -q -n scorched
 for i in `find -type d -name CVS`; do rm -rf $i; done
+install -m 755 %{SOURCE1} .
 
 %build
+export OPENAL_CONFIG=$PWD/openal-config 
 %configure2_5x \
 	--bindir=%{_gamesbindir} \
 	--datadir=%{_gamesdatadir}/%{name} \
 	--with-wx-config=%{_bindir}/wx-config-unicode \
 	--disable-openaltest \
 	--enable-dependency-tracking
+
 %make
 
 %install
