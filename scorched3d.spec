@@ -2,7 +2,7 @@
 
 Summary:	Scorched Earth 3D OpenGL Remake
 Name:		scorched3d
-Version:	43.2a
+Version:	43.3
 Release:	%mkrel 1
 License:	GPLv1+
 Group:		Games/Arcade
@@ -13,7 +13,11 @@ Source1:	openal-config
 Source11:	%{name}-16x16.png
 Source12:	%{name}-32x32.png
 Source13:	%{name}-48x48.png
-BuildRequires:	Mesa-common-devel
+Patch0:		scorched3d-gcc47.patch
+Patch1:		scorched3d-help.patch
+Patch2:		scorched3d-libpng15.patch
+Patch3:		scorched3d-syslibs.patch
+BuildRequires:	mesa-common-devel
 BuildRequires:	SDL_mixer-devel
 BuildRequires:	SDL_net-devel
 BuildRequires:	wxgtku2.8-devel
@@ -21,11 +25,11 @@ BuildRequires:	openal-devel
 BuildRequires:	freealut-devel
 BuildRequires:	fftw-devel
 BuildRequires:	expat-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires:	glew-devel
 
 %description
 Scorched is a game based loosely on the classic DOS game Scorche
-d Earth "The Mother Of All Games". 
+d Earth "The Mother Of All Games".
 
 "Scorched Earth is a simple, yet exciting artillery combat game,
 based on an auspicious history of artillery games."
@@ -39,8 +43,12 @@ environment and LAN and internet play.
 
 %prep
 %setup -q -n scorched
-for i in `find -type d -name CVS`; do rm -rf $i; done
-install -m 755 %{SOURCE1} .
+for i in `find -type d -name CVS`; do %__rm -rf $i; done
+%__install -m 755 %{SOURCE1} .
+%patch0 -p1
+%patch1 -p1
+%patch2 -p0
+%patch3 -p0
 
 %build
 export OPENAL_CONFIG=$PWD/openal-config 
@@ -54,12 +62,12 @@ export OPENAL_CONFIG=$PWD/openal-config
 %make
 
 %install
-rm -rf %{buildroot}
+%__rm -rf %{buildroot}
 %makeinstall_std
-rm -rf %{buildroot}%{_gamesdatadir}/%{name}/{README,documentation}
+%__rm -rf %{buildroot}%{_gamesdatadir}/%{name}/{README,documentation}
 
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
+%__mkdir_p %{buildroot}%{_datadir}/applications
+%__cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
 [Desktop Entry]
 Name=Scorched 3D
 Comment=Scorched Earth 3D OpenGL Remake
@@ -71,28 +79,16 @@ StartupNotify=true
 Categories=Game;ArcadeGame;
 EOF
 
-install %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
-install %{SOURCE12} -D %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
-install %{SOURCE13} -D %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
-
-%if %mdkversion < 200900
-%post
-%{update_menus}
-%update_icon_cache hicolor
-%endif
-
-%if %mdkversion < 200900
-%postun
-%{clean_menus}
-%clean_icon_cache hicolor
-%endif
+%__install %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+%__install %{SOURCE12} -D %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+%__install %{SOURCE13} -D %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 %clean
-rm -rf %{buildroot}
+%__rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc README documentation/* 
+%doc README documentation/*
 %{_gamesbindir}/*
 %{_gamesdatadir}/%{name}
 %{_iconsdir}/hicolor/*/apps/%{name}.png
