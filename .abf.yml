@@ -1,6 +1,2 @@
 sources:
-  "openal-config:"	aa03385d65e47d5a7303ae31b35ea5bbd630726d
-  "scorched3d-16x16.png:"	f505948e1caa4e34195ca86a8a04c36a170e132c
-  "scorched3d-32x32.png:"	8a4af76fbdbb75a69e482c52af9598b01af3cfdf
-  "Scorched3D-43.3-src.tar.gz:"	28dc2ef2fc850eb586f2de81ce9b5b5d0714d584
-  "scorched3d-48x48.png:"	bc1f34177498a2eaa83610252c80df01ab4da071
+  "Scorched3D-43.3-src.tar.gz": 28dc2ef2fc850eb586f2de81ce9b5b5d0714d584
