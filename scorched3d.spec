@@ -1,9 +1,9 @@
-%define	oname	Scorched3D
+%define oname Scorched3D
 
 Summary:	Scorched Earth 3D OpenGL Remake
 Name:		scorched3d
 Version:	43.3
-Release:	%mkrel 1
+Release:	2
 License:	GPLv1+
 Group:		Games/Arcade
 URL:		http://www.scorched3d.co.uk
@@ -44,7 +44,7 @@ environment and LAN and internet play.
 %prep
 %setup -q -n scorched
 for i in `find -type d -name CVS`; do %__rm -rf $i; done
-%__install -m 755 %{SOURCE1} .
+install -m 755 %{SOURCE1} .
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
@@ -62,12 +62,11 @@ export OPENAL_CONFIG=$PWD/openal-config
 %make
 
 %install
-%__rm -rf %{buildroot}
 %makeinstall_std
-%__rm -rf %{buildroot}%{_gamesdatadir}/%{name}/{README,documentation}
+rm -rf %{buildroot}%{_gamesdatadir}/%{name}/{README,documentation}
 
-%__mkdir_p %{buildroot}%{_datadir}/applications
-%__cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
 [Desktop Entry]
 Name=Scorched 3D
 Comment=Scorched Earth 3D OpenGL Remake
@@ -79,15 +78,11 @@ StartupNotify=true
 Categories=Game;ArcadeGame;
 EOF
 
-%__install %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
-%__install %{SOURCE12} -D %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
-%__install %{SOURCE13} -D %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
-
-%clean
-%__rm -rf %{buildroot}
+install %{SOURCE11} -D %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+install %{SOURCE12} -D %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+install %{SOURCE13} -D %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 %files
-%defattr(-,root,root)
 %doc README documentation/*
 %{_gamesbindir}/*
 %{_gamesdatadir}/%{name}
@@ -126,7 +121,7 @@ EOF
 + Revision: 454295
 - rebuild for new libopenal
 
-* Mon Aug 17 2009 Götz Waschk <waschk@mandriva.org> 42.1-2mdv2010.0
+* Mon Aug 17 2009 GÃ¶tz Waschk <waschk@mandriva.org> 42.1-2mdv2010.0
 + Revision: 417441
 - rebuild for new libjpeg
 
@@ -135,7 +130,7 @@ EOF
 - Update to new version 42.1
 - Remove gcc 4.3 patch: not needed anymore
 
-* Sat Feb 21 2009 Nicolas Lécureuil <nlecureuil@mandriva.com> 42-2mdv2009.1
+* Sat Feb 21 2009 Nicolas LÃ©cureuil <nlecureuil@mandriva.com> 42-2mdv2009.1
 + Revision: 343535
 - Fix desktop file
 
@@ -145,7 +140,7 @@ EOF
 - add buildrequires on expat-deve
 - Patch0: rediff
 
-* Thu Sep 25 2008 Götz Waschk <waschk@mandriva.org> 41.3-5mdv2009.0
+* Thu Sep 25 2008 GÃ¶tz Waschk <waschk@mandriva.org> 41.3-5mdv2009.0
 + Revision: 288075
 - patch to make it build
 - switch to unicode version of wxgtk
@@ -190,59 +185,59 @@ EOF
     - kill desktop-file-validate's 'warning: key "Encoding" in group "Desktop Entry" is deprecated'
 
 
-* Sun Jul 16 2006 G�tz Waschk <waschk@mandriva.org> 40-1mdv2007.0
+* Sun Jul 16 2006 Götz Waschk <waschk@mandriva.org> 40-1mdv2007.0
 - update patch 1
 - drop patch 0
 - New release 40
 
-* Fri Jul 14 2006 G�tz Waschk <waschk@mandriva.org> 39.1-3mdv2007.0
+* Fri Jul 14 2006 Götz Waschk <waschk@mandriva.org> 39.1-3mdv2007.0
 - fix menu
 
-* Thu Jul 06 2006 G�tz Waschk <waschk@mandriva.org> 39.1-2mdv2007.0
+* Thu Jul 06 2006 Götz Waschk <waschk@mandriva.org> 39.1-2mdv2007.0
 - xdg menu
 - fix build with gcc 4.1
 
-* Wed Aug 31 2005 G�tz Waschk <waschk@mandriva.org> 39.1-1mdk
+* Wed Aug 31 2005 Götz Waschk <waschk@mandriva.org> 39.1-1mdk
 - fix buildrequires
 - New release 39.1
 
-* Thu Jun 02 2005 G�tz Waschk <waschk@mandriva.org> 38.1-3mdk
+* Thu Jun 02 2005 Götz Waschk <waschk@mandriva.org> 38.1-3mdk
 - work around broken wx-config
 
-* Tue Apr 26 2005 G�tz Waschk <waschk@mandriva.org> 38.1-2mdk
+* Tue Apr 26 2005 Götz Waschk <waschk@mandriva.org> 38.1-2mdk
 - rebuild for new wxGTK
 
-* Mon Feb 14 2005 Götz Waschk <waschk@linux-mandrake.com> 38.1-1mdk
+* Mon Feb 14 2005 GÃ¶tz Waschk <waschk@linux-mandrake.com> 38.1-1mdk
 - New release 38.1
 
 * Sun Dec 05 2004 Goetz Waschk <waschk@linux-mandrake.com> 38-1mdk
 - New release 38
 
-* Fri Aug 27 2004 Per Øyvind Karlsen <peroyvind@linux-mandrake.com> 37.2-3mdk
+* Fri Aug 27 2004 Per Ã˜yvind Karlsen <peroyvind@linux-mandrake.com> 37.2-3mdk
 - rebuild for new menu
 
-* Mon Jun 07 2004 Götz Waschk <waschk@linux-mandrake.com> 37.2-2mdk
+* Mon Jun 07 2004 GÃ¶tz Waschk <waschk@linux-mandrake.com> 37.2-2mdk
 - rebuild for new g++
 
 * Tue Jun 01 2004 Lenny Cartier <lenny@mandrakesoft.com> 37.2-1mdk
 - 37.2
 
-* Tue May 04 2004 Götz Waschk <waschk@linux-mandrake.com> 37.1-1mdk
+* Tue May 04 2004 GÃ¶tz Waschk <waschk@linux-mandrake.com> 37.1-1mdk
 - fix installation
 - we really require wxGTK 2.4
 - new version
 
-* Thu Jan 15 2004 Per Øyvind Karlsen <peroyvind@linux-mandrake.com> 36.2-1mdk
+* Thu Jan 15 2004 Per Ã˜yvind Karlsen <peroyvind@linux-mandrake.com> 36.2-1mdk
 - 36.2
 - fix buildrequires
 
-* Wed Dec 10 2003 Per Øyvind Karlsen <peroyvind@linux-mandrake.com> 36-2mdk
+* Wed Dec 10 2003 Per Ã˜yvind Karlsen <peroyvind@linux-mandrake.com> 36-2mdk
 - update from cvs (after author's advice)
 
-* Mon Dec 08 2003 Per Øyvind Karlsen <peroyvind@linux-mandrake.com> 36-1mdk
+* Mon Dec 08 2003 Per Ã˜yvind Karlsen <peroyvind@linux-mandrake.com> 36-1mdk
 - build 36
 - drop P0 (merged upstream)
 
-* Sun Aug 03 2003 Per Øyvind Karlsen <peroyvind@linux-mandrake.com> 35-1mdk
+* Sun Aug 03 2003 Per Ã˜yvind Karlsen <peroyvind@linux-mandrake.com> 35-1mdk
 - initial mdk release
 
