@@ -3,7 +3,7 @@
 Summary:	Scorched Earth 3D OpenGL Remake
 Name:		scorched3d
 Version:	43.3
-Release:	4
+Release:	5
 License:	GPLv1+
 Group:		Games/Arcade
 URL:		http://www.scorched3d.co.uk
