@@ -6,7 +6,7 @@ Version:	43.3
 Release:	4
 License:	GPLv1+
 Group:		Games/Arcade
-URL:		http://www.scorched3d.co.uk
+URL:		https://www.scorched3d.co.uk
 Source0:	http://prdownloads.sourceforge.net/scorched3d/%{oname}-%{version}-src.tar.gz
 # openal-soft does not provide openal-config, so fake it
 Source1:	openal-config
