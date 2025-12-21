@@ -17,6 +17,11 @@ Patch0:		scorched3d-gcc47.patch
 Patch1:		scorched3d-help.patch
 Patch2:		scorched3d-libpng15.patch
 Patch3:		scorched3d-syslibs.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	mesa-common-devel
 BuildRequires:	SDL_mixer-devel
 BuildRequires:	SDL_net-devel
